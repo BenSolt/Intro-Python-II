@@ -6,7 +6,7 @@ import textwrap
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mouth beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -40,6 +40,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
 user_name = input("Adventure Game! Enter your players name: ")
 player = Player(user_name, room['outside'])
 print("player name:", player)
@@ -47,34 +48,38 @@ print("player name:", player)
 directions = ['n','e','s','w']
 
 # Write a loop that:
+
 while True:
-    move = input(f"choose direction to walk -> ").split('')
+    cmd = input(f"choose direction to walk -> ").split(' ')
 
-    print(f"you have chosen to {move} ")
+    print(f"you have chosen to {cmd} ")
 
-    if move[0] == 'n':
+    if cmd[0] == 'n':
         if player.location.n_to != None:
             player.location = player.location.n_to
         else:
             print(f"cant go north.")
-    elif move[0] == 'e':
+    elif cmd[0] == 'e':
         if player.location.e_to != None:
             player.location = player.location.e_to
         else:
             print(f"cant go East.")
-    elif move[0] == 's':
+    elif cmd[0] == 's':
         if player.location.s_to != None:
             player.location = player.location.s_to
         else:
             print(f"cant go South.")        
-    elif move[0] == 'w':
+    elif cmd[0] == 'w':
         if player.location.w_to != None:
             player.location = player.location.w_to
         else:
             print(f"cant go West.")  
 
-    elif move[0] == 'q':
-        print('Player quit game, goodbye!, Thank you for playing')
+    elif cmd[0] == 'q':
+        print('Player quit the game!, Thank you for playing')
+        # print(f"Player '{player.name}' quit the game! Thank you for playing")
+        
+
         break
     else:
         print(f"invalid entry, n, e, s, w, q,")
@@ -83,8 +88,10 @@ while True:
 
 # * Prints the current room name
 
- print(f"you are currently situated in the {player.location.name}")
+    print(f"you are currently situated in the {player.location}")
+
 # * Prints the current description (the textwrap module might be useful here).
+
     print(textwrap.wrap(player.location.description))
 
 

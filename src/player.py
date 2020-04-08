@@ -3,9 +3,9 @@
 
 class Player:
     def __init__(self, name, location):
-    self.name = name
-    self.location = location
-    self.items = []
+        self.name = name
+        self.location = location
+        self.items = []
     
 
     def __str__(self):
