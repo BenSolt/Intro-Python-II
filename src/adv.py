@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -38,11 +40,54 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+user_name = input("Adventure Game! Enter your players name: ")
+player = Player(user_name, room['outside'])
+print("player name:", player)
+
+directions = ['n','e','s','w']
 
 # Write a loop that:
-#
+while True:
+    move = input(f"choose direction to walk -> ").split('')
+
+    print(f"you have chosen to {move} ")
+
+    if move[0] == 'n':
+        if player.location.n_to != None:
+            player.location = player.location.n_to
+        else:
+            print(f"cant go north.")
+    elif move[0] == 'e':
+        if player.location.e_to != None:
+            player.location = player.location.e_to
+        else:
+            print(f"cant go East.")
+    elif move[0] == 's':
+        if player.location.s_to != None:
+            player.location = player.location.s_to
+        else:
+            print(f"cant go South.")        
+    elif move[0] == 'w':
+        if player.location.w_to != None:
+            player.location = player.location.w_to
+        else:
+            print(f"cant go West.")  
+
+    elif move[0] == 'q':
+        print('Player quit game, goodbye!, Thank you for playing')
+        break
+    else:
+        print(f"invalid entry, n, e, s, w, q,")
+
+
+
 # * Prints the current room name
+
+ print(f"you are currently situated in the {player.location.name}")
 # * Prints the current description (the textwrap module might be useful here).
+    print(textwrap.wrap(player.location.description))
+
+
 # * Waits for user input and decides what to do.
 #
 # If the user enters a cardinal direction, attempt to move to the room there.

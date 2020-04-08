@@ -2,6 +2,11 @@
 # currently.
 
 class Player:
-    def__init__(self, name):
+    def __init__(self, name, location):
     self.name = name
+    self.location = location
+    self.items = []
     
+
+    def __str__(self):
+        return f"My name is '{self.name}', I am currently located {self.location}"
