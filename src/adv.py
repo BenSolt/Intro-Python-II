@@ -1,28 +1,38 @@
 from room import Room
 from player import Player
-import textwrap
+# import textwrap
+from item import Item
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mouth beckons"),
+    'outside':  Room("OUTSIDE CAVE ENTRANCE",
+                     "NORTH of you, the cave mouth beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room("FOYER", """Dim light filters in from the SOUTH. Dusty
+passages run NORTH and EAST."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
+    'overlook': Room("GRAND OVERLOOK", """A steep cliff appears before you, falling
+into the darkness. Ahead to the NORTH, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':   Room("NARROW PASSAGE", """The narrow passage bends here from WEST
+to NORTH. The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room("TREASURE CHAMBER", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the SOUTH."""),
 }
 
+#ITEMS
+
+item = {
+    'Item1': Item ('ItemName', ''),
+    'Item2': Item ('ItemName', ''),
+    'Item3': Item ('ItemName', ''),
+    'Item4': Item ('ItemName', ''),
+    'Item5': Item ('ItemName', ''),
+}
 
 # Link rooms together
 
@@ -35,6 +45,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# ADD ITEM TO ROOM
+room['outside'].item =[item['Item1']]
+room['foyer'].item =[item['Item2']]
+room['overlook'].item =[item['Item3']]
+room['narrow'].item =[item['Item4']]
+room['treasure'].item =[item['Item5']]
 #
 # Main
 #
@@ -50,41 +66,70 @@ directions = ['n','e','s','w']
 # Write a loop that:
 
 while True:
-    cmd = input(f"choose direction to walk -> ").split(' ')
+    #move was cmd
+    move = input(f"choose direction to walk -> ").split(' ')
 
-    print(f"you have chosen to {cmd} ")
+    print(f"you have chosen to {move} ")
 
-    if cmd[0] == 'n':
+    if move[0] == 'n':
         if player.location.n_to != None:
             player.location = player.location.n_to
         else:
             print(f"cant go north.")
-    elif cmd[0] == 'e':
+    elif move[0] == 'e':
         if player.location.e_to != None:
             player.location = player.location.e_to
         else:
             print(f"cant go East.")
-    elif cmd[0] == 's':
+    elif move[0] == 's':
         if player.location.s_to != None:
             player.location = player.location.s_to
         else:
             print(f"cant go South.")        
-    elif cmd[0] == 'w':
+    elif move[0] == 'w':
         if player.location.w_to != None:
             player.location = player.location.w_to
         else:
             print(f"cant go West.")  
 
-    elif cmd[0] == 'q':
+    elif move[0] == 'q':
         print('Player quit the game!, Thank you for playing')
         # print(f"Player '{player.name}' quit the game! Thank you for playing")
         
+    elif move[0]== 'inv':
+        if len(player.items) > 0:
+            for item in player.items:
+                print(f"you are currently holding {item}")
+        else:
+            print('your bag is empty')
+            
+
+    elif move[0] == 'pickup':
+        try: 
+            player.pickup_item(move[1])
+        except:
+            print(f"Enter an item to pickup")
+            
+    elif move[0] == 'drop':
+        try: 
+            player.drop_item(move[1])
+        except:
+            print(f"Select an item to drop")
+
+    elif move[0] == 'look':
+        for item in player.location.item:
+            print(f"you notice the {item} lying on the ground")
+            
+
 
         break
     else:
         print(f"invalid entry, n, e, s, w, q,")
 
 
+   
+        
+        
 
 # * Prints the current room name
 
@@ -92,7 +137,7 @@ while True:
 
 # * Prints the current description (the textwrap module might be useful here).
 
-    print(textwrap.wrap(player.location.description))
+    # print(textwrap.wrap(player.location.description))
 
 
 # * Waits for user input and decides what to do.
