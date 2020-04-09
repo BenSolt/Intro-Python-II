@@ -10,4 +10,4 @@ class Item:
     
 
     def __str__(self):
-        return f"You have picked up '{self.name}', It is {self.description}"
+        return f"{self.name}, {self.description}"
