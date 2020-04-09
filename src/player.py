@@ -15,5 +15,5 @@ class Player:
         self.items.append(item)
         print(self.location.item)
     
-    def drop_item(self,item):
+    def drop_item(self, item):
         self.items.remove(item)

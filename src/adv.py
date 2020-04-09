@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from item import Item
+from itemInspect import ItemInspect
 
 # import textwrap
 
@@ -28,11 +29,21 @@ earlier adventurers. The only exit is to the SOUTH."""),
 #ITEMS
 
 item = {
-    'corpse': Item ('corpse', 'It has been dead for a while. Type -> inspect'),
-    'Item2': Item ('ItemName2', ''),
-    'Item3': Item ('ItemName3', ''),
-    'Item4': Item ('ItemName4', ''),
-    'nothing': Item ('ItemName5', ''),
+    'corpse': Item ('corpse', 'A fellow adventurer, who has been dead for several months.'),
+    'gold': Item ('gold', ' glitters in the dim light'),
+    'sword': Item ('sword', 'an ornate sword'),
+    'Item4': Item ('Item 4', 'description'),
+    'nothing': Item ('nothing', 'appears to be nothing left but dust and cobwebs.'),
+}
+
+#ITEM INSPECT
+
+itemInspect = {
+    'darts': ItemInspect ('darts', 'looks to be the cause of his death'),
+    'map': ItemInspect ('map', 'appears to be a treasure map of some sort.'),
+    'ItemInspect3': ItemInspect ('3', 'description 3'),
+    'ring': ItemInspect ('Gold', 'Looks to be an ordinary gold ring'),
+    'switch': ItemInspect ('Switch', ' a well concealed switch located in the rock wall'),
 }
 
 # Link rooms together
@@ -49,10 +60,14 @@ room['treasure'].s_to = room['narrow']
 
 # ADD ITEM TO ROOM
 room['outside'].item =[item['corpse']]
-room['foyer'].item =[item['Item2']]
-room['overlook'].item =[item['Item3']]
+room['foyer'].item =[item['gold']]
+room['overlook'].item =[item['sword']]
 room['narrow'].item =[item['Item4']]
 room['treasure'].item =[item['nothing']]
+
+# ADD INSPECT TO ITEM
+item['corpse'].itemInspect =[itemInspect['darts']]
+
 #
 # Main
 #
@@ -97,18 +112,17 @@ while True:
         else:
             print(f"cant go West.")  
             
-# # QUIT GAME
-#     elif cmd[0] == 'q':
-#         print('Player quit the game!, Thank you for playing')
-#         # print(f"Player '{player.name}' quit the game! Thank you for playing")
-#         break
-# ITEMS
-    elif cmd[0]== 'I':
-        if len(player.items) > 0:
-            for item in player.items:
-                print(f"you are currently holding {item}")
-        else:
-            print('your bag is empty')
+            
+#LOOK AROUND ROOM
+    elif cmd[0] == 'look':
+        for item in player.location.item:
+            print(f"you notice the {item}")
+            
+#INSPECT ITEM            
+    elif cmd[0] == 'inspect':
+        for itemInspect in player.location.item.itemInspect:
+            print(f"you inspect {itemInspect} and find...")
+            
             
 #PICKUP ITEM
     elif cmd[0] == 'pickup':
@@ -123,15 +137,15 @@ while True:
             player.drop_item(cmd[1])
         except:
             print(f"Select an item to drop")
-            
-#LOOK AROUND ROOM
-    elif cmd[0] == 'look':
-        for item in player.location.item:
-            print(f"you notice the {item}")
-            
-    elif cmd[0] == 'inspect':
-        for item in player.location.item:
-            print(f"you inspect {item} and find...")
+# ITEMS
+    elif cmd[0]== 'i':
+        if len(player.items) > 0:
+            for item in player.items:
+                print(f"you are currently holding {item}")
+        else:
+            print('your bag is empty')
+                        
+
             
 # GAME INFO            
     elif cmd[0] == 'info':
@@ -139,7 +153,7 @@ while True:
             
     
     else:
-        print(f"invalid entry, n, e, s, w, q, look, pickup")
+        print(f"invalid entry Only --> i, n, e, s, w, q, look, pickup, drop are valid inputs")
         
 # QUIT GAME
     if cmd[0] == 'q':
