@@ -29,21 +29,21 @@ earlier adventurers. The only exit is to the SOUTH."""),
 #ITEMS
 
 item = {
-    'corpse': Item ('corpse', 'A fellow adventurer, who has been dead for several months.'),
-    'gold': Item ('gold', ' glitters in the dim light'),
-    'sword': Item ('sword', 'an ornate sword'),
-    'Item4': Item ('Item 4', 'description'),
-    'nothing': Item ('nothing', 'appears to be nothing left but dust and cobwebs.'),
+    'corpse': Item ('corpse', 'A fellow adventurer, who has been dead for several months.\n'),
+    'gold': Item ('gold', ' glitters in the dim light\n'),
+    'sword': Item ('sword', 'an ornate sword\n'),
+    'Item4': Item ('Item 4', 'description\n'),
+    'nothing': Item ('nothing', 'appears to be nothing left but dust and cobwebs.\n'),
 }
 
 #ITEM INSPECT
 
 itemInspect = {
-    'darts': ItemInspect ('darts', 'looks to be the cause of his death'),
-    'map': ItemInspect ('map', 'appears to be a treasure map of some sort.'),
-    'ItemInspect3': ItemInspect ('3', 'description 3'),
-    'ring': ItemInspect ('Gold', 'Looks to be an ordinary gold ring'),
-    'switch': ItemInspect ('Switch', ' a well concealed switch located in the rock wall'),
+    'darts': ItemInspect ('darts', 'looks to be the cause of his death\n'),
+    'map': ItemInspect ('map', 'appears to be a treasure map of some sort.\n'),
+    'ItemInspect3': ItemInspect ('3', 'description 3\n'),
+    'ring': ItemInspect ('Gold', 'Looks to be an ordinary gold ring\n'),
+    'switch': ItemInspect ('Switch', ' a well concealed switch located in the rock wall\n'),
 }
 
 # Link rooms together
@@ -87,7 +87,9 @@ move = ['n','e','s','w']
 while True:
     
     cmd = input(f"choose direction to walk -> ").split(' ')
-
+    
+    # pikup = input(f"you have picked up {item}").split(' ')
+    
     print(f"you have chosen to walk {cmd} ")
 
     if cmd[0] == 'n':
@@ -127,21 +129,23 @@ while True:
 #PICKUP ITEM
     elif cmd[0] == 'pickup':
         try: 
-            player.pickup_item(cmd[1])
+            # player.pickup_item(cmd[1])
+            player.pickup_item(item)
         except:
             print(f"Enter an item to pickup")
             
 #DROP ITEM           
     elif cmd[0] == 'drop':
         try: 
-            player.drop_item(cmd[1])
+            player.drop_item(item)
+            
         except:
             print(f"Select an item to drop")
 # ITEMS
     elif cmd[0]== 'i':
         if len(player.items) > 0:
             for item in player.items:
-                print(f"you are currently holding {item}")
+                print(f"you are holding {item}")
         else:
             print('your bag is empty')
                         
@@ -153,7 +157,7 @@ while True:
             
     
     else:
-        print(f"invalid entry Only --> i, n, e, s, w, q, look, pickup, drop are valid inputs")
+        print(f"invalid entry Only --> i, n, e, s, w, q, look, pickup, and drop --> are valid inputs")
         
 # QUIT GAME
     if cmd[0] == 'q':

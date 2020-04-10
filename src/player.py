@@ -13,7 +13,9 @@ class Player:
     
     def pickup_item(self, item):
         self.items.append(item)
-        print(self.location.item)
+        print(f"you picked up a {item.name}")
+        
     
     def drop_item(self, item):
         self.items.remove(item)
+        print(f"you dropped {item.name}")
