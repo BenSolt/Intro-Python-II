@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-from item import Item
+from item import *
 from itemInspect import ItemInspect
 
 # import textwrap
@@ -8,29 +8,32 @@ from itemInspect import ItemInspect
 # Declare all the rooms
 
 room = {
-    'outside':  Room("OUTSIDE CAVE ENTRANCE",
-                     "NORTH of you, the cave mouth beckons"),
+    'outside':  Room("\033[0;34m Outside Cave Entrance\033[0m",
+                     "\033[0;31mNORTH\033[0m of you, the cave mouth beckons"),
 
-    'foyer':    Room("FOYER", """Dim light filters in from the SOUTH. Dusty
-passages run NORTH and EAST."""),
+    'foyer':    Room("\033[0;34mFOYER\033[0m", """Dim light filters in from the \033[0;31mSOUTH\033[0m. Dusty
+passages run \033[0;31mNORTH\033[0m and \033[0;31mEAST\033[0m."""),
 
-    'overlook': Room("GRAND OVERLOOK", """A steep cliff appears before you, falling
-into the darkness. Ahead to the NORTH, a light flickers in
+    'overlook': Room("\033[0;34mGRAND OVERLOOK\033[0m", """A steep cliff appears before you, falling
+into the darkness. Ahead to the \033[0;31mNORTH\033[0m, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("NARROW PASSAGE", """The narrow passage bends here from WEST
-to NORTH. The smell of gold permeates the air."""),
+    'narrow':   Room("\033[0;34mNARROW PASSAGE\033[0m", """The narrow passage bends here from \033[0;31mWEST\033[0m
+to \033[0;31mNORTH\033[0m. The smell of gold permeates the air."""),
 
-    'treasure': Room("TREASURE CHAMBER", """You've found the long-lost treasure
+    'treasure': Room("\033[0;34mTREASURE CHAMBER\033[0m", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the SOUTH."""),
+earlier adventurers. The only exit is to the \033[0;31mSOUTH\033[0m."""),
 }
 
 #ITEMS
 
+itemNot = { 
+    'corpse': ItemNot ('corpse', 'a fellow adventurer, who has been dead for several months.\n'),
+}
 item = {
-    'corpse': Item ('corpse', 'A fellow adventurer, who has been dead for several months.\n'),
-    'gold': Item ('gold', ' glitters in the dim light\n'),
+    # 'corpse': Item ('corpse', 'a fellow adventurer, who has been dead for several months.\n'),
+    'gold': Item ('gold', 'glitters in the dim light\n'),
     'sword': Item ('sword', 'an ornate sword\n'),
     'Item4': Item ('Item 4', 'description\n'),
     'nothing': Item ('nothing', 'appears to be nothing left but dust and cobwebs.\n'),
@@ -59,14 +62,14 @@ room['treasure'].s_to = room['narrow']
 
 
 # ADD ITEM TO ROOM
-room['outside'].item =[item['corpse']]
+room['outside'].itemNot =[itemNot['corpse']]
 room['foyer'].item =[item['gold']]
 room['overlook'].item =[item['sword']]
 room['narrow'].item =[item['Item4']]
 room['treasure'].item =[item['nothing']]
 
 # ADD INSPECT TO ITEM
-item['corpse'].itemInspect =[itemInspect['darts']]
+itemNot['corpse'].itemInspect =[itemInspect['darts']]
 
 #
 # Main
@@ -74,51 +77,53 @@ item['corpse'].itemInspect =[itemInspect['darts']]
 
 # Make a new player object that is currently in the 'outside' room.
 
-user_name = input("Adventure Game!\n Type --> info <-- for Game Menu.\n Enter your players name: ")
+user_name = input("\033[0;31m Adventure Game!\033[0m\n type -->\033[0;34m info\033[0m <-- for Game Menu.\n Enter your players name: ")
 player = Player(user_name, room['outside'])
 print("player name:", player, )
 
 
-move = ['n','e','s','w']
+move = ['N','e','s','w']
 
 
 # Write a loop that:
 
 while True:
     
-    cmd = input(f"choose direction to walk -> ").split(' ')
+    cmd = input(f"choose direction to walk or type 'look' to look around ->").split(' ')
     
     # pikup = input(f"you have picked up {item}").split(' ')
     
-    print(f"you have chosen to walk {cmd} ")
+    print(f"you have chosen to walk \033[0;31m{cmd}\033[0m ")
 
     if cmd[0] == 'n':
         if player.location.n_to != None:
             player.location = player.location.n_to
         else:
-            print(f"cant go north.")        
+            print(f"you cant go north.")        
             
     elif cmd[0] == 'e':
         if player.location.e_to != None:
             player.location = player.location.e_to
         else:
-            print(f"cant go East.")
+            print(f"you cant go East.")
     elif cmd[0] == 's':
         if player.location.s_to != None:
             player.location = player.location.s_to
         else:
-            print(f"cant go South.")        
+            print(f"you cant go South.")        
     elif cmd[0] == 'w':
         if player.location.w_to != None:
             player.location = player.location.w_to
         else:
-            print(f"cant go West.")  
+            print(f"you cant go West.")  
             
             
 #LOOK AROUND ROOM
     elif cmd[0] == 'look':
         for item in player.location.item:
             print(f"you notice the {item}")
+        for itemNot in player.location.itemNot:
+            print(f"you notice the {itemNot}")
             
 #INSPECT ITEM            
     elif cmd[0] == 'inspect':
@@ -129,8 +134,8 @@ while True:
 #PICKUP ITEM
     elif cmd[0] == 'pickup':
         try: 
-            # player.pickup_item(cmd[1])
             player.pickup_item(item)
+            
         except:
             print(f"Enter an item to pickup")
             
