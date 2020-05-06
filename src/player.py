@@ -18,3 +18,7 @@ class Player:
     def drop_item(self, item):
         self.items.remove(item)
         print(f"you dropped \033[1;33m{item.name}\033[0m")
+
+
+
+  

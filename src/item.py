@@ -3,7 +3,8 @@ class Item:
     def __init__(self, name, description):
         self.name = name
         self.description = description
-        
+    #this what i want??
+        # self.inspect = []
        
         
     def __str__(self):
