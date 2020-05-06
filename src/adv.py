@@ -17,14 +17,14 @@ passages run \033[0;31mNORTH\033[0m and \033[0;31mEAST\033[0m.\n"""),
 
     'overlook': Room("\033[0;34mGRAND OVERLOOK\033[0m", """A steep cliff appears before you, falling
 into the darkness. Ahead to the \033[0;31mNORTH\033[0m, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.\n"""),
 
     'narrow':   Room("\033[0;34mNARROW PASSAGE\033[0m", """The narrow passage bends here from \033[0;31mWEST\033[0m
-to \033[0;31mNORTH\033[0m. The smell of gold permeates the air."""),
+to \033[0;31mNORTH\033[0m. The smell of gold permeates the air.\n"""),
 
     'treasure': Room("\033[0;34mTREASURE CHAMBER\033[0m", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the \033[0;31mSOUTH\033[0m."""),
+earlier adventurers. The only exit is to the \033[0;31mSOUTH\033[0m.\n"""),
 }
 
 #ITEMS
@@ -72,6 +72,7 @@ room['narrow'].item =[item['ring']]
 room['treasure'].item =[item['nothing']]
 
 # ADD INSPECT TO ITEM
+
 itemNot['corpse2'].itemInspect =[itemInspect['darts']]
 item['corpse'].itemInspect =[itemInspect['darts']]
 
@@ -96,8 +97,15 @@ while True:
     cmd = input(f"choose direction to walk or type 'look' to look around, 'inspect' to inspect, 'pickup' to pickup ->\n").split(' ')
     
     # pikup = input(f"you have picked up {item}").split(' ')
-    
-    print(f"you have chosen to walk \033[0;31m{cmd}\033[0m\n ")
+    # print(f"you have chosen to walk \033[0;31m{cmd}\033[0m\n ")
+    if cmd[0] == 'look':
+        print(f"--you look around--")
+    elif cmd[0] == 'inspect':
+            print(f"--you inspect--")
+    elif cmd[0] == 'pickup':
+            print(f"--you pickup--")
+    else:
+        print(f"you have chosen to walk \033[0;31m{cmd}\033[0m\n ")
 
     if cmd[0] == 'n':
         if player.location.n_to != None:
@@ -143,7 +151,7 @@ while True:
         #         print(f"you inspect {itemInspect} and find...")
         # # else:
             for item in player.location.item:
-                print(f"you inspect \033[1;33m{item.name}\033[0m and find...")    
+                print(f"you inspect \033[1;33m{item.name}\033[0m and find...{itemInspect}")    
             
 #PICKUP ITEM
     elif cmd[0] == 'pickup':

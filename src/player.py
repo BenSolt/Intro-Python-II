@@ -13,7 +13,7 @@ class Player:
     
     def pickup_item(self, item):
         self.items.append(item)
-        print(f"you picked up \033[1;33m{item.name}\033[0m")
+        print(f" \033[1;33m{item.name}\033[0m")
     
     def drop_item(self, item):
         self.items.remove(item)
