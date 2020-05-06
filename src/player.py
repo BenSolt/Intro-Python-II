@@ -9,7 +9,7 @@ class Player:
     
 
     def __str__(self):
-        return f" My name is '\033[0;31m{self.name}\033[0m'\nI am currently located {self.location} "
+        return f" My name is '\033[0;31m{self.name}\033[0m'\nI am currently located {self.location}"
     
     def pickup_item(self, item):
         self.items.append(item)

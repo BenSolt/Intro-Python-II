@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
-from item import *
+from item import Item
+from itemNot import ItemNot
 from itemInspect import ItemInspect
 
 # import textwrap
@@ -12,7 +13,7 @@ room = {
                      "\033[0;31mNORTH\033[0m of you, the cave mouth beckons"),
 
     'foyer':    Room("\033[0;34mFOYER\033[0m", """Dim light filters in from the \033[0;31mSOUTH\033[0m. Dusty
-passages run \033[0;31mNORTH\033[0m and \033[0;31mEAST\033[0m."""),
+passages run \033[0;31mNORTH\033[0m and \033[0;31mEAST\033[0m.\n"""),
 
     'overlook': Room("\033[0;34mGRAND OVERLOOK\033[0m", """A steep cliff appears before you, falling
 into the darkness. Ahead to the \033[0;31mNORTH\033[0m, a light flickers in
@@ -29,13 +30,14 @@ earlier adventurers. The only exit is to the \033[0;31mSOUTH\033[0m."""),
 #ITEMS
 
 itemNot = { 
-    'corpse': ItemNot ('corpse', 'a fellow adventurer, who has been dead for several months.\n'),
+    'corpse2': ItemNot ('corpse2', 'a fellow adventurer, who has been dead for several months.\n'),
+    'corpse3': ItemNot ('corpse3', 'a fhs.\n'),
 }
 item = {
-    # 'corpse': Item ('corpse', 'a fellow adventurer, who has been dead for several months.\n'),
-    'gold': Item ('gold', 'glitters in the dim light\n'),
-    'sword': Item ('sword', 'an ornate sword\n'),
-    'Item4': Item ('Item 4', 'description\n'),
+    'corpse': Item ('corpse', 'a fellow adventurer, who has been dead for several months.\n'),
+    'gold': Item ('Gold', 'glittering in the dim light\n'),
+    'sword': Item ('Sword', 'an ornate sword\n'),
+    'ring': Item ('Ring', 'Looks to be an ordinary gold ring\n'),
     'nothing': Item ('nothing', 'appears to be nothing left but dust and cobwebs.\n'),
 }
 
@@ -45,7 +47,7 @@ itemInspect = {
     'darts': ItemInspect ('darts', 'looks to be the cause of his death\n'),
     'map': ItemInspect ('map', 'appears to be a treasure map of some sort.\n'),
     'ItemInspect3': ItemInspect ('3', 'description 3\n'),
-    'ring': ItemInspect ('Gold', 'Looks to be an ordinary gold ring\n'),
+    'ringb': ItemInspect ('Ringb', 'the ring has magical properties, you gain health and Intel\n'),
     'switch': ItemInspect ('Switch', ' a well concealed switch located in the rock wall\n'),
 }
 
@@ -62,14 +64,16 @@ room['treasure'].s_to = room['narrow']
 
 
 # ADD ITEM TO ROOM
-room['outside'].itemNot =[itemNot['corpse']]
+# room['outside'].itemNot =[itemNot['corpse2']]
+room['outside'].item =[item['corpse']]
 room['foyer'].item =[item['gold']]
 room['overlook'].item =[item['sword']]
-room['narrow'].item =[item['Item4']]
+room['narrow'].item =[item['ring']]
 room['treasure'].item =[item['nothing']]
 
 # ADD INSPECT TO ITEM
-itemNot['corpse'].itemInspect =[itemInspect['darts']]
+itemNot['corpse2'].itemInspect =[itemInspect['darts']]
+item['corpse'].itemInspect =[itemInspect['darts']]
 
 #
 # Main
@@ -82,18 +86,18 @@ player = Player(user_name, room['outside'])
 print("player name:", player, )
 
 
-move = ['N','e','s','w']
+# move = ['n','e','s','w']
 
 
 # Write a loop that:
 
 while True:
     
-    cmd = input(f"choose direction to walk or type 'look' to look around ->").split(' ')
+    cmd = input(f"choose direction to walk or type 'look' to look around, 'inspect' to inspect, 'pickup' to pickup ->\n").split(' ')
     
     # pikup = input(f"you have picked up {item}").split(' ')
     
-    print(f"you have chosen to walk \033[0;31m{cmd}\033[0m ")
+    print(f"you have chosen to walk \033[0;31m{cmd}\033[0m\n ")
 
     if cmd[0] == 'n':
         if player.location.n_to != None:
@@ -120,16 +124,26 @@ while True:
             
 #LOOK AROUND ROOM
     elif cmd[0] == 'look':
-        for item in player.location.item:
-            print(f"you notice the {item}")
-        for itemNot in player.location.itemNot:
-            print(f"you notice the {itemNot}")
+        # if itemNot:
+        #     for itemNot in player.location.itemNot:
+        #         print(f"you notice the {itemNot}")
+            
+        # else:
+            for item in player.location.item:
+                print(f"you notice the {item}")
+                
+       
             
 #INSPECT ITEM            
     elif cmd[0] == 'inspect':
-        for itemInspect in player.location.item.itemInspect:
-            print(f"you inspect {itemInspect} and find...")
-            
+       
+        # if itemNot:
+        #     # for itemInspect in player.location.itemNot.itemInspect:
+        #     for itemInspect in player.location.itemNot:
+        #         print(f"you inspect {itemInspect} and find...")
+        # # else:
+            for item in player.location.item:
+                print(f"you inspect \033[1;33m{item.name}\033[0m and find...")    
             
 #PICKUP ITEM
     elif cmd[0] == 'pickup':
@@ -150,7 +164,7 @@ while True:
     elif cmd[0]== 'i':
         if len(player.items) > 0:
             for item in player.items:
-                print(f"you are holding {item}")
+                print(f"you are holding \033[1;33m{item.name}\033[0m")
         else:
             print('your bag is empty')
                         
