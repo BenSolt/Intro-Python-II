@@ -64,8 +64,9 @@ room['treasure'].s_to = room['narrow']
 
 
 # ADD ITEM TO ROOM
-room['outside'].itemNot =[itemNot['corpse2']]
-# room['outside'].item =[item['corpse']]
+
+# room['outside'].itemNot =[itemNot['corpse2']]
+room['outside'].item =[item['corpse']]
 room['foyer'].item =[item['gold']]
 room['overlook'].item =[item['sword']]
 room['narrow'].item =[item['ring']]
@@ -134,12 +135,11 @@ while True:
             
 #LOOK AROUND ROOM
     elif cmd[0] == 'look':
-        if itemNot:
-            for itemNot in player.location.itemNot:
-                print(f"you notice the {itemNot}")
-            else: 
-                pass
-        else:
+        # if itemNot:
+        #     for itemNot in player.location.itemNot:
+        #         print(f"you notice the {itemNot}")
+           
+        # else:
             for item in player.location.item:
                 print(f"you notice the {item}")
                 
@@ -149,7 +149,8 @@ while True:
     elif cmd[0] == 'inspect':
         if itemNot:
             for itemNot in player.location.itemNot:
-                print(f"you inspect \033[1;33m{itemNot.name}\033[0m and find...{itemNot.itemInspect[0]}\n")
+                print(f"you inspect \033[1;33m{itemNot.name}\033[0m and find...{itemNot.itemInspect}\n")
+                # {itemNot.itemInspect[0]}\n")
         else:
             for item in player.location.item:
                 print(f"you inspect \033[1;33m{item.name}\033[0m and find...{item.itemInspect}\n")    
@@ -157,10 +158,21 @@ while True:
             
 #PICKUP ITEM
     elif cmd[0] == 'pickup':
+       
+        selection = input("select item to pickup or type 'exit' to quit:")
+  
+        if selection == "corpse2":
+            print('cant pickup item!')
+
+
         try: 
-            player.pickup_item(item)
+            if selection == "corpse2":
+            # player.pickup_item(item)
+                print('cant pickup item!')
+            else:
+                player.pickup_item(item)
         except:
-            print(f"Enter an item to pickup")
+            print(f"Enter an item to pickup")       
             
 #DROP ITEM           
     elif cmd[0] == 'drop':
