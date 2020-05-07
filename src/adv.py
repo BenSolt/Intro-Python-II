@@ -74,7 +74,7 @@ room['treasure'].item =[item['nothing']]
 
 # ADD INSPECT TO ITEM
 
-itemNot['corpse2'].itemInspect =[itemInspect['darts']]
+item['corpse'].itemInspect =[itemInspect['darts']]
 # item['corpse'].itemInspect =[itemInspect['darts']]
 
 #
@@ -87,8 +87,6 @@ user_name = input("\033[0;31m Adventure Game!\033[0m\n type -->\033[0;34m info\0
 player = Player(user_name, room['outside'])
 print("player name:", player, )
 
-
-# move = ['n','e','s','w']
 
 
 # Write a loop that:
@@ -105,7 +103,7 @@ while True:
     elif cmd[0] == 'inspect':
             print(f"--you inspect--")
     elif cmd[0] == 'pickup':
-            print(f"--you pickup--")
+            print(f"Enter an item to pickup:")
     else:
         print(f"you have chosen to walk \033[0;31m{cmd}\033[0m\n ")
         
@@ -135,11 +133,7 @@ while True:
             
 #LOOK AROUND ROOM
     elif cmd[0] == 'look':
-        # if itemNot:
-        #     for itemNot in player.location.itemNot:
-        #         print(f"you notice the {itemNot}")
-           
-        # else:
+     
             for item in player.location.item:
                 print(f"you notice the {item}")
                 
@@ -147,32 +141,27 @@ while True:
             
 #INSPECT ITEM            
     elif cmd[0] == 'inspect':
-        if itemNot:
-            for itemNot in player.location.itemNot:
-                print(f"you inspect \033[1;33m{itemNot.name}\033[0m and find...{itemNot.itemInspect}\n")
-                # {itemNot.itemInspect[0]}\n")
-        else:
+              
             for item in player.location.item:
-                print(f"you inspect \033[1;33m{item.name}\033[0m and find...{item.itemInspect}\n")    
-
+                print(f"\033[1;33m{item.name}\033[0m and find...{item.itemInspect[0]}\n")    
+                # {item.itemInspect[0]}\n")
             
 #PICKUP ITEM
     elif cmd[0] == 'pickup':
        
-        selection = input("Enter an item to pickup:")
-  
+        selection = input("")
 
         try: 
             select = (selection)
             if select == "corpse":
-            # player.pickup_item(item)
-                # print('You cant pickup!')
+                # for item in player.location.item:
                 for item in player.location.item:
-                    print(f"You cant pickup {item.name}")
+                    print(f"You cant pickup \033[1;33m{item.name}\033[0m")
             else:
-                player.pickup_item(item)
+                # player.pickup_item(item)
+                    print(f"You picked up {item.itemInspect[0]}")
         except:
-            print(f"Enter an item to pickup")       
+            print(f"errrr")       
             
 #DROP ITEM           
     elif cmd[0] == 'drop':
@@ -201,8 +190,7 @@ while True:
         
 # QUIT GAME
     if cmd[0] == 'q':
-        print('Player quit the game!, Thank you for playing')
-        # print(f"Player '{player.name}' quit the game! Thank you for playing")
+        print(f"Player '{player.name}' quit the game! Thank you for playing")
         break
 
    
@@ -211,7 +199,11 @@ while True:
 
 # * Prints the current room name
 
-    print(f"you are currently situated in the {player.location}")
+    # print(f"you are currently situated in the {player.location}.")
+
+
+#########################################################################
+
 
 # * Prints the current description (the textwrap module might be useful here).
 

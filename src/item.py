@@ -8,6 +8,6 @@ class Item:
        
         
     def __str__(self):
-        return f"\033[1;33m{self.name}\033[0m, \033[1;32m{self.description}\n\033[0mtype \033[0;34mpickup\033[0m to pickup items\n"
+        return f"\033[1;33m{self.name}\033[0m, \033[1;32m{self.description}\n\033[0mType \033[0;34mpickup\033[0m to pickup items\n\033[0;34minspect\033[0m to inspect items"
 
 
