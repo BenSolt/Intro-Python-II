@@ -159,16 +159,16 @@ while True:
 #PICKUP ITEM
     elif cmd[0] == 'pickup':
        
-        selection = input("select item to pickup or type 'exit' to quit:")
+        selection = input("Enter an item to pickup:")
   
-        if selection == "corpse2":
-            print('cant pickup item!')
-
 
         try: 
-            if selection == "corpse2":
+            select = (selection)
+            if select == "corpse":
             # player.pickup_item(item)
-                print('cant pickup item!')
+                # print('You cant pickup!')
+                for item in player.location.item:
+                    print(f"You cant pickup {item.name}")
             else:
                 player.pickup_item(item)
         except:
